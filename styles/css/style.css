@@ -1,0 +1,677 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: "Open Sans", sans-serif;
+  list-style: none;
+}
+
+body {
+  padding: 16px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 100dvh;
+  background: linear-gradient(328deg, rgb(62, 0, 106) 0%, rgb(217, 147, 255) 48%, rgb(158, 46, 200) 100%);
+  background-repeat: no-repeat;
+  background-size: cover;
+}
+
+.app {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.container-wrapper {
+  background-color: #fff;
+  padding: 50px;
+  border-radius: 22px;
+  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.55);
+  border: 1px solid #333;
+  width: 700px;
+  max-width: 100%;
+  max-height: 90vh;
+  overflow: hidden;
+  overflow-y: scroll;
+}
+.container-wrapper::-webkit-scrollbar {
+  width: 0;
+  background: transparent;
+}
+.container-wrapper .to-do-app {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+.container-wrapper .to-do-app h2 {
+  display: flex;
+  align-items: center;
+  color: #131313;
+  font-size: 40px;
+  margin-bottom: 25px;
+}
+.container-wrapper .to-do-app h2 img {
+  width: 55px;
+  height: auto;
+  margin-left: 25px;
+}
+.container-wrapper .to-do-app .search-container {
+  width: 100%;
+  display: flex;
+  position: relative;
+  margin-bottom: 50px;
+}
+.container-wrapper .to-do-app .search-container input {
+  flex: 1;
+  padding: 20px;
+  border: 1px solid #b4b4b4;
+  outline: none;
+  border-radius: 200px;
+  font-size: 1.3rem;
+  color: #131313;
+  font-weight: 500;
+  transition: all 300ms ease;
+}
+.container-wrapper .to-do-app .search-container input:focus, .container-wrapper .to-do-app .search-container input:hover {
+  background-color: #f3f3f3;
+  border-color: #ac4dff;
+}
+.container-wrapper .to-do-app .search-container input:focus {
+  box-shadow: 0 0 20px rgba(20, 20, 20, 0.25);
+}
+.container-wrapper .to-do-app .search-container input::-moz-placeholder {
+  color: #b4b4b4;
+}
+.container-wrapper .to-do-app .search-container input::placeholder {
+  color: #b4b4b4;
+}
+.container-wrapper .to-do-app .search-container button {
+  cursor: pointer;
+  position: absolute;
+  right: 0;
+  top: 50%;
+  transform: translateY(-50%);
+  height: 100%;
+  padding: 0 60px;
+  border-radius: 200px;
+  background-color: #ac4dff;
+  border: none;
+  outline: none;
+  font-size: 1rem;
+  font-weight: 700;
+  color: #fff;
+  transition: 300ms ease;
+}
+.container-wrapper .to-do-app .search-container button:hover {
+  background-color: #b969ff;
+}
+.container-wrapper .to-do-app ul {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+  transition: 200ms ease;
+}
+.container-wrapper .to-do-app ul li {
+  display: flex;
+  align-items: center;
+  -webkit-user-select: none;
+     -moz-user-select: none;
+          user-select: none;
+  cursor: pointer;
+  padding: 12px 50px 12px 50px;
+  font-size: 1.1rem;
+  font-weight: 500;
+  color: #131313;
+  position: relative;
+  word-break: break-all;
+  border: 1px solid #b4b4b4;
+  border-radius: 30px;
+  animation: fadeInUp 0.45s ease forwards;
+  transition: 0.3s ease;
+}
+.container-wrapper .to-do-app ul li:before {
+  content: "";
+  position: absolute;
+  width: 28px;
+  height: 28px;
+  background-image: url(../../images/Unchecked.png);
+  background-size: cover;
+  background-position: center;
+  border-radius: 50%;
+  top: 50%;
+  transform: translateY(-50%);
+  left: 8px;
+}
+.container-wrapper .to-do-app ul li.checked {
+  text-decoration: line-through;
+  color: #b4b4b4;
+  background-color: rgba(29, 213, 35, 0.0470588235);
+  border-color: #ac4dff;
+}
+.container-wrapper .to-do-app ul li.checked::before {
+  background-image: url(../../images/checked.png);
+}
+.container-wrapper .to-do-app ul li:hover {
+  background-color: #f3f3f3;
+  box-shadow: 0 0 4px rgba(23, 23, 23, 0.1);
+}
+.container-wrapper .to-do-app ul li .delete-btn {
+  position: absolute;
+  right: 0;
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  transition: 100ms ease;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: 0.3s ease;
+  border: 1px solid transparent;
+}
+.container-wrapper .to-do-app ul li .delete-btn i {
+  font-size: 1.3rem;
+  color: #b4b4b4;
+  transition: color 0.3s ease;
+}
+.container-wrapper .to-do-app ul li .delete-btn:hover {
+  background-color: #ac4dff;
+  border: 1px solid #ac4dff;
+}
+.container-wrapper .to-do-app ul li .delete-btn:hover i {
+  color: #fff;
+}
+.container-wrapper .to-do-app ul li.fade-out {
+  animation: fadeOut 0.4s ease forwards;
+}
+
+.popup {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(18, 18, 18, 0.1960784314);
+  -webkit-backdrop-filter: blur(10px);
+          backdrop-filter: blur(10px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transform: scale(0);
+  animation: slideInPopup 0.15s ease-out forwards;
+}
+.popup .wrapper {
+  position: relative;
+  max-width: 450px;
+  width: 100%;
+  height: auto;
+  border: 1px solid #333;
+  background-color: #fff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  gap: 20px;
+  text-align: center;
+  padding: 35px 45px;
+  border-radius: 8px;
+  opacity: 0;
+  transform: scale(0.2);
+  animation: fadeInPopup 0.3s ease forwards;
+  animation-delay: 0.25s;
+}
+.popup .wrapper .icon {
+  width: 80px;
+  height: 80px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.popup .wrapper .icon i {
+  color: #ff4646;
+  font-size: 5rem;
+}
+.popup .wrapper .error {
+  color: #ff4646;
+  font-size: 1.4rem;
+  font-weight: 600;
+  position: relative;
+  margin-bottom: 15px;
+}
+.popup .wrapper .error:before {
+  content: "";
+  position: absolute;
+  bottom: -15px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 60%;
+  background-color: #b4b4b4;
+  height: 3px;
+  border-radius: 20px;
+}
+.popup .wrapper p {
+  color: #626262;
+  font-size: 1rem;
+}
+.popup .wrapper.closing {
+  animation: fadeOutPopup 0.3s ease forwards;
+}
+.popup .again-btn {
+  cursor: pointer;
+  outline: none;
+  border: none;
+  padding: 15px 30px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: #ac4dff;
+  color: #fff;
+  font-size: 1rem;
+  border: 1px solid #333;
+  transition: 300ms ease;
+  font-weight: 700;
+  border-radius: 4px;
+}
+.popup .again-btn:hover {
+  background-color: #b969ff;
+}
+.popup .close-btn {
+  cursor: pointer;
+  outline: none;
+  border: none;
+  padding: 5px;
+  width: 30px;
+  height: 30px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: #333;
+  color: #fff;
+  border: 1px solid #333;
+  transition: 300ms ease;
+  font-weight: 700;
+  border-radius: 50%;
+  position: absolute;
+  top: -10px;
+  right: -10px;
+}
+.popup .close-btn i {
+  font-size: 1.5rem;
+  transition: 300ms ease;
+}
+.popup .close-btn:hover {
+  background-color: #b4b4b4;
+  transform: scale(0.9);
+}
+.popup .close-btn:hover i {
+  color: #333;
+}
+.popup.closing {
+  animation: slideOutPopup 0.5s ease forwards;
+  animation-fill-mode: forwards;
+}
+
+.task-remove-toast,
+.task-done-toast {
+  max-width: 250px;
+  width: 100%;
+  position: fixed;
+  bottom: 30px;
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: #69ff6e;
+  color: #131313;
+  padding: 8px 16px;
+  border-radius: 40px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.35);
+  font-weight: 600;
+  font-size: 0.85rem;
+  opacity: 1;
+  animation: slideInUpTaskItem 0.3s ease forwards;
+  z-index: 1000;
+}
+.task-remove-toast.fade-out,
+.task-done-toast.fade-out {
+  animation: fadeOutTaskItem 0.4s ease forwards;
+}
+.task-remove-toast img,
+.task-done-toast img {
+  width: 40px;
+  height: 40px;
+  margin-right: 8px;
+}
+.task-remove-toast .toast-span,
+.task-done-toast .toast-span {
+  padding: 6px;
+  background-color: rgba(18, 18, 18, 0.4862745098);
+  color: #fff;
+  border-radius: 6px;
+  text-decoration: underline;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.35);
+  margin-left: 8px;
+}
+
+.task-remove-toast {
+  background-color: #ff4646;
+  color: #fff;
+}
+
+.instruction-container {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(255, 255, 255, 0.168627451);
+  -webkit-backdrop-filter: blur(10px);
+          backdrop-filter: blur(10px);
+}
+.instruction-container .instruction-detail {
+  position: relative;
+  margin: 0 auto;
+  padding: 25px 45px;
+  background-color: #fff;
+  border: 1px solid #333;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.35);
+  max-width: 450px;
+  width: 100%;
+  animation: showInstruction 0.8s ease forwards;
+}
+.instruction-container .instruction-detail .tittle {
+  text-align: center;
+}
+.instruction-container .instruction-detail .star {
+  position: absolute;
+  top: -20px;
+  right: -20px;
+}
+.instruction-container .instruction-detail .star img {
+  width: 60px;
+  height: 60px;
+}
+.instruction-container .instruction-detail h5 {
+  font-size: 1.4rem;
+  color: #131313;
+  margin-bottom: 1rem;
+  font-weight: 700;
+}
+.instruction-container .instruction-detail .instruction-spans {
+  display: flex;
+  flex-direction: column;
+  align-items: start;
+  gap: 6px;
+}
+.instruction-container .instruction-detail .instruction-spans .instruction-item {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  align-items: center;
+  gap: 10px;
+}
+.instruction-container .instruction-detail .instruction-spans .instruction-item i {
+  color: #ac4dff;
+  font-size: 1.9rem;
+  display: inline-block;
+}
+.instruction-container .instruction-detail .instruction-spans .instruction-item .instruction-span {
+  font-size: 1rem;
+  font-weight: 300;
+  padding: 6px;
+  border-radius: 6px;
+  position: relative;
+  z-index: 99999;
+  transition: color 0.3s ease-in-out;
+}
+.instruction-container .instruction-detail .instruction-spans .instruction-item .instruction-span:before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 0;
+  height: 100%;
+  border-radius: 6px;
+  animation: bgColor 0.4s ease-in-out forwards;
+  z-index: -1;
+  border-bottom: 2px solid #b969ff;
+}
+.instruction-container .instruction-detail .instruction-spans .instruction-item .instruction-span.active {
+  color: #fff;
+}
+.instruction-container .instruction-detail .instruction-spans .instruction-item:nth-child(1) .instruction-span::before {
+  animation-delay: 0.9s;
+}
+.instruction-container .instruction-detail .instruction-spans .instruction-item:nth-child(2) .instruction-span::before {
+  animation-delay: 1.3s;
+}
+.instruction-container .instruction-detail .instruction-spans .instruction-item:nth-child(3) .instruction-span::before {
+  animation-delay: 1.7s;
+}
+.instruction-container .instruction-detail .instruction-spans .instruction-item:nth-child(4) .instruction-span::before {
+  animation-delay: 2.1s;
+}
+.instruction-container .instruction-detail .instruction-spans .instruction-item:nth-child(5) .instruction-span::before {
+  animation-delay: 2.5s;
+}
+.instruction-container .instruction-detail .btn-understand {
+  width: 100%;
+  margin-top: 1rem;
+  margin-bottom: 1rem;
+  display: flex;
+  justify-content: center;
+}
+.instruction-container .instruction-detail .btn-understand button {
+  cursor: pointer;
+  outline: none;
+  border: none;
+  padding: 15px 30px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: #ac4dff;
+  color: #fff;
+  font-size: 1rem;
+  border: 1px solid #333;
+  transition: 300ms ease;
+  font-weight: 700;
+  border-radius: 4px;
+}
+.instruction-container .instruction-detail .btn-understand button:hover {
+  background-color: #b969ff;
+}
+.instruction-container .instruction-detail::before {
+  content: "";
+  position: absolute;
+  top: -81px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 40px;
+  height: 80px;
+  background-color: #fff;
+  border: 1px solid #333;
+  border-bottom: none;
+}
+.instruction-container .instruction-detail.remove-instruction {
+  animation: removeInstruction 0.6s forwards;
+}
+.instruction-container .instruction-detail .progress-container {
+  width: 100%;
+  height: 5px;
+  background-color: #b4b4b4;
+  border-radius: 2px;
+}
+.instruction-container .instruction-detail .progress-container .progress-bar {
+  width: 50%;
+  background-color: #b969ff;
+  height: 100%;
+  position: relative;
+}
+.instruction-container .instruction-detail .progress-container .progress-bar:after {
+  content: "";
+  position: absolute;
+  top: 50%;
+  right: 0;
+  transform: translateY(-50%);
+  width: 6px;
+  height: 6px;
+  background-color: #b969ff;
+  border-radius: 50%;
+}
+
+@keyframes bgColor {
+  0% {
+    width: 0;
+    background-color: #ececec;
+  }
+  100% {
+    width: 100%;
+    background-color: #333;
+  }
+}
+@keyframes changeColor {
+  from {
+    color: #ff4646;
+  }
+  to {
+    color: #333;
+  }
+}
+@keyframes showInstruction {
+  0% {
+    opacity: 0;
+    transform: translateY(0) scale(1);
+  }
+  30% {
+    transform: translateY(-20px) scale(1.1);
+  }
+  50% {
+    transform: translateY(10px) scale(0.95);
+  }
+  70% {
+    opacity: 1;
+    transform: translateY(-5px) scale(1.05);
+  }
+  90% {
+    transform: translateY(5px) scale(0.98);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(70px) scale(1);
+  }
+}
+@keyframes removeInstruction {
+  0% {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+  40% {
+    transform: skew(25%);
+  }
+  100% {
+    opacity: 0;
+    transform: translateY(-100%) scale(0);
+  }
+}
+@keyframes slideInUpTaskItem {
+  from {
+    opacity: 0;
+    transform: translateX(-50%) translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(-50%) translateY(0);
+  }
+}
+@keyframes fadeOutTaskItem {
+  from {
+    opacity: 1;
+  }
+  to {
+    opacity: 0;
+  }
+}
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateX(30px) scale(0.25) rotate(5deg);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0) scale(1);
+  }
+}
+@keyframes fadeOut {
+  from {
+    opacity: 1;
+    transform: scale(1);
+  }
+  to {
+    opacity: 0;
+    transform: scale(0.25);
+  }
+}
+@keyframes fadeInPopup {
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+@keyframes slideInPopup {
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+@keyframes slideOutPopup {
+  from {
+    opacity: 1;
+    transform: translateX(0);
+  }
+  to {
+    opacity: 0;
+    transform: translateX(100%);
+  }
+}
+@keyframes fadeOutPopup {
+  from {
+    opacity: 1;
+    transform: scale(1);
+  }
+  to {
+    opacity: 0;
+    transform: scale(0.2);
+  }
+}
+@media (max-width: 600px) {
+  .container-wrapper {
+    padding: 30px;
+  }
+  .container-wrapper .to-do-app h2 {
+    flex-direction: column;
+    gap: 10px;
+    font-size: 30px;
+  }
+  .container-wrapper .to-do-app h2 img {
+    margin-left: 0;
+    width: 45px;
+  }
+  .container-wrapper .to-do-app .search-container {
+    flex-direction: column;
+    gap: 10px;
+  }
+  .container-wrapper .to-do-app .search-container input {
+    padding: 15px;
+    font-size: 15px;
+  }
+  .container-wrapper .to-do-app .search-container button {
+    position: static;
+    transform: translateY(0);
+    padding: 15px;
+    font-size: 15px;
+  }
+}/*# sourceMappingURL=style.css.map */

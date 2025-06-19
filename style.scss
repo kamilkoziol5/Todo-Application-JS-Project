@@ -1,0 +1,753 @@
+@import "variables";
+
+// Global Styles
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: "Open Sans", sans-serif;
+  list-style: none;
+}
+
+// Body Styles
+body {
+  padding: 16px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 100dvh;
+  background: linear-gradient(
+    328deg,
+    rgba(62, 0, 106, 1) 0%,
+    rgba(217, 147, 255, 1) 48%,
+    rgba(158, 46, 200, 1) 100%
+  );
+  background-repeat: no-repeat;
+  background-size: cover;
+}
+
+.app {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+// Main App Styles
+.container-wrapper {
+  background-color: $whiteColor;
+  padding: 50px;
+  border-radius: 22px;
+  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.55);
+  border: 1px solid $grayColorDark;
+  width: 700px;
+  max-width: 100%;
+  max-height: 90vh;
+  overflow: hidden;
+  overflow-y: scroll;
+
+  &::-webkit-scrollbar {
+    width: 0;
+    background: transparent;
+  }
+
+  .to-do-app {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+
+    h2 {
+      display: flex;
+      align-items: center;
+      color: $textColor;
+      font-size: 40px;
+      margin-bottom: 25px;
+
+      img {
+        width: 55px;
+        height: auto;
+        margin-left: 25px;
+      }
+    }
+    .search-container {
+      width: 100%;
+      display: flex;
+      position: relative;
+      margin-bottom: 50px;
+
+      input {
+        flex: 1;
+        padding: 20px;
+        border: 1px solid $grayColor;
+        outline: none;
+        border-radius: 200px;
+        font-size: 1.3rem;
+        color: $textColor;
+        font-weight: 500;
+        transition: all 300ms ease;
+
+        &:focus,
+        &:hover {
+          background-color: #f3f3f3;
+          border-color: $accentColor;
+        }
+
+        &:focus {
+          box-shadow: 0 0 20px rgba(20, 20, 20, 0.25);
+        }
+
+        &::placeholder {
+          color: $grayColor;
+        }
+      }
+
+      button {
+        cursor: pointer;
+        position: absolute;
+        right: 0;
+        top: 50%;
+        transform: translateY(-50%);
+        height: 100%;
+        padding: 0 60px;
+        border-radius: 200px;
+        background-color: $accentColor;
+        border: none;
+        outline: none;
+        font-size: 1rem;
+        font-weight: 700;
+        color: $whiteColor;
+        transition: 300ms ease;
+
+        &:hover {
+          background-color: $accentColorHover;
+        }
+      }
+    }
+
+    ul {
+      width: 100%;
+      display: flex;
+      flex-direction: column;
+      gap: 15px;
+      transition: 200ms ease;
+
+      li {
+        display: flex;
+        align-items: center;
+        user-select: none;
+        cursor: pointer;
+        padding: 12px 50px 12px 50px;
+        font-size: 1.1rem;
+        font-weight: 500;
+        color: $textColor;
+        position: relative;
+        word-break: break-all;
+        border: 1px solid $grayColor;
+        border-radius: 30px;
+        animation: fadeInUp 0.45s ease forwards;
+        transition: 0.3s ease;
+
+        &:before {
+          content: "";
+          position: absolute;
+          width: 28px;
+          height: 28px;
+          background-image: url(../../images/Unchecked.png);
+          background-size: cover;
+          background-position: center;
+          border-radius: 50%;
+          top: 50%;
+          transform: translateY(-50%);
+          left: 8px;
+        }
+
+        &.checked {
+          text-decoration: line-through;
+          color: $grayColor;
+          background-color: #1dd5230c;
+          border-color: $accentColor;
+
+          &::before {
+            background-image: url(../../images/checked.png);
+          }
+        }
+
+        &:hover {
+          background-color: #f3f3f3;
+          box-shadow: 0 0 4px rgba(23, 23, 23, 0.1);
+        }
+
+        .delete-btn {
+          position: absolute;
+          right: 0;
+          width: 50px;
+          height: 50px;
+          border-radius: 50%;
+          transition: 100ms ease;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          transition: 0.3s ease;
+          border: 1px solid transparent;
+
+          i {
+            font-size: 1.3rem;
+            color: $grayColor;
+            transition: color 0.3s ease;
+          }
+
+          &:hover {
+            background-color: $accentColor;
+            border: 1px solid $accentColor;
+
+            i {
+              color: $whiteColor;
+            }
+          }
+        }
+        &.fade-out {
+          animation: fadeOut 0.4s ease forwards;
+        }
+      }
+    }
+  }
+}
+
+// Alert Popup
+.popup {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: #12121232;
+  backdrop-filter: blur(10px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transform: scale(0);
+  animation: slideInPopup 0.15s ease-out forwards;
+
+  .wrapper {
+    position: relative;
+    max-width: 450px;
+    width: 100%;
+    height: auto;
+    border: 1px solid $grayColorDark;
+    background-color: $whiteColor;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    gap: 20px;
+    text-align: center;
+    padding: 35px 45px;
+    border-radius: 8px;
+    opacity: 0;
+    transform: scale(0.2);
+    animation: fadeInPopup 0.3s ease forwards;
+    animation-delay: 0.25s;
+
+    .icon {
+      width: 80px;
+      height: 80px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+
+      i {
+        color: $errorRedColor;
+        font-size: 5rem;
+      }
+    }
+    .error {
+      color: $errorRedColor;
+      font-size: 1.4rem;
+      font-weight: 600;
+      position: relative;
+      margin-bottom: 15px;
+
+      &:before {
+        content: "";
+        position: absolute;
+        bottom: -15px;
+        left: 50%;
+        transform: translateX(-50%);
+        width: 60%;
+        background-color: $grayColor;
+        height: 3px;
+        border-radius: 20px;
+      }
+    }
+    p {
+      color: #626262;
+      font-size: 1rem;
+    }
+    &.closing {
+      animation: fadeOutPopup 0.3s ease forwards;
+    }
+  }
+
+  .again-btn {
+    cursor: pointer;
+    outline: none;
+    border: none;
+    padding: 15px 30px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: $accentColor;
+    color: $whiteColor;
+    font-size: 1rem;
+    border: 1px solid $grayColorDark;
+    transition: 300ms ease;
+    font-weight: 700;
+    border-radius: 4px;
+
+    &:hover {
+      background-color: $accentColorHover;
+    }
+  }
+
+  .close-btn {
+    cursor: pointer;
+    outline: none;
+    border: none;
+    padding: 5px;
+    width: 30px;
+    height: 30px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: $grayColorDark;
+    color: $whiteColor;
+    border: 1px solid $grayColorDark;
+    transition: 300ms ease;
+    font-weight: 700;
+    border-radius: 50%;
+    position: absolute;
+    top: -10px;
+    right: -10px;
+
+    i {
+      font-size: 1.5rem;
+      transition: 300ms ease;
+    }
+
+    &:hover {
+      background-color: $grayColor;
+      transform: scale(0.9);
+
+      i {
+        color: $grayColorDark;
+      }
+    }
+  }
+
+  &.closing {
+    animation: slideOutPopup 0.5s ease forwards;
+    animation-fill-mode: forwards;
+  }
+}
+
+// Toast Task Item
+.task-remove-toast,
+.task-done-toast {
+  max-width: 250px;
+  width: 100%;
+  position: fixed;
+  bottom: 30px;
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: $successGreenColor;
+  color: $textColor;
+  padding: 8px 16px;
+  border-radius: 40px;
+  box-shadow: 0 4px 8px rgb(0 0 0 / 0.35);
+  font-weight: 600;
+  font-size: 0.85rem;
+  opacity: 1;
+  animation: slideInUpTaskItem 0.3s ease forwards;
+  z-index: 1000;
+
+  &.fade-out {
+    animation: fadeOutTaskItem 0.4s ease forwards;
+  }
+
+  img {
+    width: 40px;
+    height: 40px;
+    margin-right: 8px;
+  }
+  .toast-span {
+    padding: 6px;
+    background-color: #1212127c;
+    color: $whiteColor;
+    border-radius: 6px;
+    text-decoration: underline;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.35);
+    margin-left: 8px;
+  }
+}
+
+// Toast Remove Item
+.task-remove-toast {
+  background-color: $errorRedColor;
+  color: $whiteColor;
+}
+
+// Instructrion Details
+.instruction-container {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: #ffffff2b;
+  backdrop-filter: blur(10px);
+
+  .instruction-detail {
+    position: relative;
+    margin: 0 auto;
+    padding: 25px 45px;
+    background-color: $whiteColor;
+    border: 1px solid $grayColorDark;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.35);
+    max-width: 450px;
+    width: 100%;
+    animation: showInstruction 0.8s ease forwards;
+
+    .tittle {
+      text-align: center;
+    }
+    .star {
+      position: absolute;
+      top: -20px;
+      right: -20px;
+
+      img {
+        width: 60px;
+        height: 60px;
+      }
+    }
+
+    h5 {
+      font-size: 1.4rem;
+      color: $textColor;
+      margin-bottom: 1rem;
+      font-weight: 700;
+    }
+
+    .instruction-spans {
+      display: flex;
+      flex-direction: column;
+      align-items: start;
+      gap: 6px;
+
+      .instruction-item {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        align-items: center;
+        gap: 10px;
+
+        i {
+          color: $accentColor;
+          font-size: 1.9rem;
+          display: inline-block;
+        }
+        .instruction-span {
+          font-size: 1rem;
+          font-weight: 300;
+          padding: 6px;
+          border-radius: 6px;
+          position: relative;
+          z-index: 99999;
+          transition: color 0.3s ease-in-out;
+
+          &:before {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 0;
+            height: 100%;
+            border-radius: 6px;
+            animation: bgColor 0.4s ease-in-out forwards;
+            z-index: -1;
+            border-bottom: 2px solid $accentColorHover;
+          }
+
+          &.active {
+            color: $whiteColor;
+          }
+        }
+      }
+
+      .instruction-item:nth-child(1) .instruction-span::before {
+        animation-delay: 0.9s;
+      }
+      .instruction-item:nth-child(2) .instruction-span::before {
+        animation-delay: 1.3s;
+      }
+      .instruction-item:nth-child(3) .instruction-span::before {
+        animation-delay: 1.7s;
+      }
+      .instruction-item:nth-child(4) .instruction-span::before {
+        animation-delay: 2.1s;
+      }
+      .instruction-item:nth-child(5) .instruction-span::before {
+        animation-delay: 2.5s;
+      }
+    }
+    .btn-understand {
+      width: 100%;
+      margin-top: 1rem;
+      margin-bottom: 1rem;
+      display: flex;
+      justify-content: center;
+
+      button {
+        cursor: pointer;
+        outline: none;
+        border: none;
+        padding: 15px 30px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        background-color: $accentColor;
+        color: $whiteColor;
+        font-size: 1rem;
+        border: 1px solid $grayColorDark;
+        transition: 300ms ease;
+        font-weight: 700;
+        border-radius: 4px;
+
+        &:hover {
+          background-color: $accentColorHover;
+        }
+      }
+    }
+
+    &::before {
+      content: "";
+      position: absolute;
+      top: -81px;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 40px;
+      height: 80px;
+      background-color: $whiteColor;
+      border: 1px solid $grayColorDark;
+      border-bottom: none;
+    }
+
+    &.remove-instruction {
+      animation: removeInstruction 0.6s forwards;
+    }
+
+    .progress-container {
+      width: 100%;
+      height: 5px;
+      background-color: $grayColor;
+      border-radius: 2px;
+
+      .progress-bar {
+        width: 50%;
+        background-color: $accentColorHover;
+        height: 100%;
+        position: relative;
+
+        &:after {
+          content: "";
+          position: absolute;
+          top: 50%;
+          right: 0;
+          transform: translateY(-50%);
+          width: 6px;
+          height: 6px;
+          background-color: $accentColorHover;
+          border-radius: 50%;
+        }
+      }
+    }
+  }
+}
+
+@keyframes bgColor {
+  0% {
+    width: 0;
+    background-color: #ececec;
+  }
+  100% {
+    width: 100%;
+    background-color: $grayColorDark;
+  }
+}
+
+@keyframes changeColor {
+  from {
+    color: $errorRedColor;
+  }
+  to {
+    color: $grayColorDark;
+  }
+}
+
+@keyframes showInstruction {
+  0% {
+    opacity: 0;
+    transform: translateY(0) scale(1);
+  }
+  30% {
+    transform: translateY(-20px) scale(1.1);
+  }
+  50% {
+    transform: translateY(10px) scale(0.95);
+  }
+  70% {
+    opacity: 1;
+    transform: translateY(-5px) scale(1.05);
+  }
+  90% {
+    transform: translateY(5px) scale(0.98);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(70px) scale(1);
+  }
+}
+
+@keyframes removeInstruction {
+  0% {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+  40% {
+    transform: skew(25%);
+  }
+  100% {
+    opacity: 0;
+    transform: translateY(-100%) scale(0);
+  }
+}
+
+// Keyframes CheckTask
+@keyframes slideInUpTaskItem {
+  from {
+    opacity: 0;
+    transform: translateX(-50%) translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(-50%) translateY(0);
+  }
+}
+
+@keyframes fadeOutTaskItem {
+  from {
+    opacity: 1;
+  }
+  to {
+    opacity: 0;
+  }
+}
+
+// Keyframes Add New Li
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateX(30px) scale(0.25) rotate(5deg);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0) scale(1);
+  }
+}
+
+@keyframes fadeOut {
+  from {
+    opacity: 1;
+    transform: scale(1);
+  }
+  to {
+    opacity: 0;
+    transform: scale(0.25);
+  }
+}
+
+// Keyframes Popup
+@keyframes fadeInPopup {
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+@keyframes slideInPopup {
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+@keyframes slideOutPopup {
+  from {
+    opacity: 1;
+    transform: translateX(0);
+  }
+  to {
+    opacity: 0;
+    transform: translateX(100%);
+  }
+}
+
+@keyframes fadeOutPopup {
+  from {
+    opacity: 1;
+    transform: scale(1);
+  }
+  to {
+    opacity: 0;
+    transform: scale(0.2);
+  }
+}
+
+// Responsive Styles for mobiles
+@media (max-width: 600px) {
+  .container-wrapper {
+    padding: 30px;
+    .to-do-app {
+      h2 {
+        flex-direction: column;
+        gap: 10px;
+        font-size: 30px;
+
+        img {
+          margin-left: 0;
+          width: 45px;
+        }
+      }
+      .search-container {
+        flex-direction: column;
+        gap: 10px;
+
+        input {
+          padding: 15px;
+          font-size: 15px;
+        }
+
+        button {
+          position: static;
+          transform: translateY(0);
+          padding: 15px;
+          font-size: 15px;
+        }
+      }
+    }
+  }
+}
