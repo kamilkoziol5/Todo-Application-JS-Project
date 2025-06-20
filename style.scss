@@ -756,6 +756,10 @@ body {
     gap: 15px;
     padding: 20px 30px;
   }
+  .popup .again-btn {
+    padding: 10px 20px;
+    font-size: 0.85rem;
+  }
 
   .instruction-container .instruction-detail {
     max-width: 335px;
@@ -771,6 +775,10 @@ body {
     .instruction-span {
       font-size: 0.85rem;
     }
+
+    i {
+      font-size: 1.5rem;
+    }
   }
 
   .container-wrapper .to-do-app ul li {
@@ -781,5 +789,18 @@ body {
   .container-wrapper .to-do-app ul li:before {
     width: 20px;
     height: 20px;
+  }
+  .instruction-container .instruction-detail .star {
+    top: -15px;
+    right: -10px;
+
+    img {
+      width: 45px;
+      height: 45px;
+    }
+  }
+  .instruction-container .instruction-detail .btn-understand button {
+    padding: 10px 20px;
+    font-size: 0.85rem;
   }
 }

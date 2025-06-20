@@ -22,13 +22,10 @@ export function instructionTimeout() {
     }, delay);
   });
 
-  const duration = 10000;
+  const duration = 15000;
   const stopProgress = startProgressBar(progressBar, duration, () => {
     btn.click();
   });
-  setTimeout(() => {
-    btn.click();
-  }, 10000);
 
   btn.addEventListener("click", () => {
     detailCtn.classList.add("remove-instruction");
