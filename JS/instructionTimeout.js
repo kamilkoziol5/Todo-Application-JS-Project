@@ -2,8 +2,12 @@ import { renderInstruction } from "./renderInstruction.js";
 import { startProgressBar } from "./progressBar.js";
 
 export function instructionTimeout() {
+  const taskList = document.querySelector("#task-container");
+
+  if (taskList.children.length > 0) return;
   const app = document.querySelector("#app");
   const instrPopup = renderInstruction();
+
   app.append(instrPopup);
 
   const btn = instrPopup.querySelector("#btn-understand");

@@ -1,7 +1,8 @@
+import { getTasksFromStorage, saveTasksToStorage } from "./localStorage.js";
 import { showTaskDoneToast } from "./taskDonePopup.js";
 import { showTaskRemoveToast } from "./taskDeletePopup.js";
 
-export function renderTaskLi(taskText, taskList, input) {
+export function renderTaskLi(taskText, taskList, input, done = false) {
   const li = document.createElement("li");
 
   li.innerHTML = `
@@ -9,8 +10,12 @@ export function renderTaskLi(taskText, taskList, input) {
     <span class="delete-btn"><i class='bx bx-trash'></i></span>
   `;
 
+  if (done) li.classList.add("checked");
+
   li.addEventListener("click", (e) => {
     const deleteBtn = e.target.closest(".delete-btn");
+
+    let tasks = getTasksFromStorage();
 
     if (deleteBtn) {
       li.classList.add("fade-out");
@@ -20,11 +25,19 @@ export function renderTaskLi(taskText, taskList, input) {
         "animationend",
         () => {
           li.remove();
+          tasks = tasks.filter((t) => t.text !== taskText);
+          saveTasksToStorage(tasks);
         },
         { once: true }
       );
     } else {
       li.classList.toggle("checked");
+      tasks = tasks.map((t) =>
+        t.text === taskText
+          ? { ...t, done: li.classList.contains("checked") }
+          : t
+      );
+      saveTasksToStorage(tasks);
 
       if (li.classList.contains("checked")) {
         showTaskDoneToast();

@@ -515,10 +515,10 @@ body {
   content: "";
   position: absolute;
   top: 50%;
-  right: 0;
+  right: -3px;
   transform: translateY(-50%);
-  width: 6px;
-  height: 6px;
+  width: 8px;
+  height: 8px;
   background-color: #b969ff;
   border-radius: 50%;
 }
@@ -673,5 +673,28 @@ body {
     transform: translateY(0);
     padding: 15px;
     font-size: 15px;
+  }
+  .popup .wrapper {
+    max-width: 300px;
+    gap: 15px;
+    padding: 20px 30px;
+  }
+  .instruction-container .instruction-detail {
+    max-width: 335px;
+    padding: 15px 20px;
+  }
+  .instruction-container .instruction-detail .instruction-spans .instruction-item {
+    gap: 5px;
+  }
+  .instruction-container .instruction-detail .instruction-spans .instruction-item .instruction-span {
+    font-size: 0.85rem;
+  }
+  .container-wrapper .to-do-app ul li {
+    padding: 8px 40px 8px 40px;
+    font-size: 1rem;
+  }
+  .container-wrapper .to-do-app ul li:before {
+    width: 20px;
+    height: 20px;
   }
 }/*# sourceMappingURL=style.css.map */

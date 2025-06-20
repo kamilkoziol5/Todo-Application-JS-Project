@@ -1,7 +1,8 @@
 import { renderToDoAppUi } from "./renderToDoApp.js";
-import { addTask } from "./addTask.js";
-import { renderInstruction } from "./renderInstruction.js";
+import { addTaskSetup } from "./addTask.js";
 import { instructionTimeout } from "./instructionTimeout.js";
 
-setTimeout(() => instructionTimeout(), 2000);
+const { input, button, taskList } = renderToDoAppUi();
 
+addTaskSetup(input, button, taskList);
+setTimeout(() => instructionTimeout(), 1500);

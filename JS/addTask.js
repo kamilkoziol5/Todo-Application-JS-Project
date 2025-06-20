@@ -1,27 +1,36 @@
 import { renderPopup } from "./renderpPopupAlert.js";
-import { renderToDoAppUi } from "./renderToDoApp.js";
 import { renderTaskLi } from "./renderTaskLi.js";
+import {
+  getTasksFromStorage,
+  saveTasksToStorage,
+  loadTasksFromStorage,
+} from "./localStorage.js";
 
-const { input, button, taskList } = renderToDoAppUi();
+export function addTaskSetup(input, button, taskList) {
+  function addTask() {
+    const taskText = input.value.trim();
 
-export function addTask() {
-  const taskText = input.value.trim();
+    if (!taskText) {
+      const popup = renderPopup();
+      taskList.appendChild(popup);
+      return;
+    }
 
-  if (!taskText || taskText === "") {
-    const popup = renderPopup();
-    taskList.appendChild(popup);
-    return;
-  }
+    const tasks = getTasksFromStorage();
+    tasks.push({ text: taskText, done: false });
+    saveTasksToStorage(tasks);
 
-  if (taskText !== "") {
-    renderTaskLi(taskText, taskList, input);
+    renderTaskLi(taskText, taskList, input, false);
     input.value = "";
   }
-}
 
-button.addEventListener("click", addTask);
-input.addEventListener("keydown", (e) => {
-  if (e.key === "Enter") {
-    addTask();
-  }
-});
+  button.addEventListener("click", addTask);
+
+  input.addEventListener("keydown", (e) => {
+    if (e.key === "Enter") {
+      addTask();
+    }
+  });
+
+  loadTasksFromStorage(taskList, input);
+}
